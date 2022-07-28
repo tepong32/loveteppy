@@ -21,6 +21,7 @@ def home(request):
 		'posts': Post.objects.all().order_by("-date_posted"),
 		'announcements': Announcement.objects.all().order_by("-date_posted"),
 		'quotes': Quote.objects.all(),
+		'quotescount': Quote.objects.count()+1, #+1 because there's a hard-coded quote on html page: fall seven times; stand-up eight
 		'postcount': Post.objects.count(),
 	}
 
