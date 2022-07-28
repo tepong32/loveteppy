@@ -1,0 +1,34 @@
+{% load static %}
+<!-- 
+  NOTE: This navigation bar is set to "expand at md" screen size. For more info, see: https://getbootstrap.com/docs/5.0/examples/navbars/.
+  Don't know how to use those examples? Right-click on that page and select "View page source" then copy the block of code you feel like using.
+ -->
+{% include 'nav/_css.html' %}
+ <nav class="navbar navbar-expand-md navbar-light fixed-top p-0" aria-label="Main Navbar">
+  <img src="/media/defaults/bg03.jpg" style="position: absolute; object-fit: cover; width: 100%;height: 100%; z-index: -1;">
+  <!-- src="https://drive.google.com/uc?id=16R6MV74g0qR8SKR040ItjkSw73r9yJCX" -->
+
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><img class="navLogo" src="/media/defaults/smile.png">
+      <!-- src="https://drive.google.com/uc?id=1JSY0d86oFJ2KYnY4ATlYUggBH-mH0Zqt" -->
+      
+      <span class="dearjessaText"> <small>love,</small> teppy </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-center" id="mainNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blogs' %}"><i class="fas fa-comments m-2"></i>Blogs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}"><i class="fa fa-info-circle m-2"></i>About</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+

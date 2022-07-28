@@ -1,0 +1,16 @@
+<style type="text/css">
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+	* {
+		font-family: 'Roboto', sans-serif;
+	}
+	
+	/* might conflict with isolating items from the darkmode effect but this is what makes the toggle work/show */
+	.darkmode-layer, .darkmode-toggle {
+		  z-index: 500;
+		}
+		
+	/* example for isolating classes */
+	.button {
+		  isolation: isolate;
+		}
+</style>

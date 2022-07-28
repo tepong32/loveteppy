@@ -1,0 +1,132 @@
+{% load static %}
+<div class="row" >
+	<style type="text/css">
+		.tab-pane {
+			min-height: 50vh;
+			max-height: 200vh;
+		}
+	</style>
+	<div class="container overflow-auto col-lg-12 col-sm-12 col-md-12 mb-2" style="margin-bottom: 5px; padding: 0;">
+		<div class="col-12 col-sm-6 col-lg-12">
+			<div class="card card-pink card-tabs">
+			  <div class="card-header p-0 pt-1">
+			    <ul class="nav nav-tabs" id="custom-tabs-tab" role="tablist">
+			      <li class="nav-item">
+			        <a class="nav-link active" id="custom-tabs-onlyforyou-tab" data-toggle="pill" href="#custom-tabs-onlyforyou" role="tab" aria-controls="custom-tabs-onlyforyou" aria-selected="false">Only For You</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" id="custom-tabs-maritess-tab" data-toggle="pill" href="#custom-tabs-maritess" role="tab" aria-controls="custom-tabs-maritess" aria-selected="false">Maritess' Area</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" id="custom-tabs-blogs-tab" data-toggle="pill" href="#custom-tabs-blogs" role="tab" aria-controls="custom-tabs-blogs" aria-selected="false">Latests</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" id="custom-tabs-etc-tab" data-toggle="pill" href="#custom-tabs-etc" role="tab" aria-controls="custom-tabs-etc" aria-selected="true">WoW <small>(Words of Wisdom)</small></a>
+			      </li>
+			    </ul>
+			  </div>
+			  <div class="card-body">
+			    <div class="tab-content" id="custom-tabs-tabContent">
+			    	
+			      <!-- Only For You -->
+			      <div class="tab-pane fade active show overflow-auto" id="custom-tabs-onlyforyou" role="tabpanel" aria-labelledby="custom-tabs-onlyforyou-tab">
+			      	<p>
+			      		Hello! <br>
+						As you can see on the tab, para sa'yo lang 'tong mga nandito. Sa ibang tab yung para sa ibang tao. :)
+			      	</p>
+			      	<hr>
+			        {% for a in announcements %}
+			            <div class="onlyforyouBox overflow-auto">
+			                <h4 class="text-danger">
+			                	{{ a.title }}
+			                </h4> 
+			                <i><small>{{a.date_posted}}</small></i>
+			                {{ a.content|safe }} <br/>
+			                <!-- by <b>{{a.author}}</b> <br/> -->
+			            </div>
+			        {% endfor %}
+			      </div>
+
+			      <!-- Maritess area -->
+			      <div class="tab-pane fade" id="custom-tabs-maritess" role="tabpanel" aria-labelledby="custom-tabs-maritess-tab">
+					<div class="card-body text-center overflow-auto">
+						Binigyan ko naman din ng tab yung mga friendships namin <small>(sharawts sa inyo, Conduent/GP pips!)</small> para malaman naman din namin yung mga saloobin ninyo.
+						<h6 class="quoteText text-danger">Shy-type tayo so, kung magko-comments kayo, idirekta nyo na dito para tayo-tayo lang ang makakaalam. XD</h6>
+						<div class="fb-comments" data-href="http://loveteppy.pythonanywhere.com/" data-width="100%" data-numposts="15"></div>
+					</div>
+			      </div>
+
+			      <!-- Latests area -->
+			      <div class="tab-pane fade" id="custom-tabs-blogs" role="tabpanel" aria-labelledby="custom-tabs-blogs-tab">
+			      		<h6>
+			      			Here's where I will share random thoughts for everyone <small>(who's going to visit the site, of course)</small>. Might as well take full advantage of the fact that this is hosted for free, right?
+			      		</h6>
+						<div class="row">
+							{% for post in posts %}
+								<div class="col-10">
+									<a href="{% url 'post-detail' post.slug %}">
+										<strong><i>{{post.title|truncatechars:50}}</i></strong>
+									</a>
+								</div>
+								<div class="col">
+									<small>{{post.author}}</small>
+								</div>
+							{% endfor %} <br>
+							<small>
+								There are a total of ({{postcount}}) posts created.<br>
+								<a href="/blogs">See all of them here.</a>
+							</small>
+						</div>
+			      </div>
+
+			      <!-- WoW area -->
+			      <div class="tab-pane fade" id="custom-tabs-etc" role="tabpanel" aria-labelledby="custom-tabs-etc-tab">
+			    	<!-- Quotes CAROUSEL -->				
+					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
+						<div class="carousel-inner" style="">
+							<h6>Quotes add life to life. Here are some of what I remember. Feel free to grab what suits you, as well. Cheers!</h6>
+							<small>Maybe a total quote count here so people know how many there are?</small>
+						  <!-- Default/First item on the Quotes carousel with "active" class // this is a hard-coded quote -->
+						  <div class="carousel-item active p-5 text-center" style="align-items: center">
+						    <div class="card-body quoteText">
+						    	Fall seven times; Stand-up eight.
+						    </div>
+						  </div>
+
+						  <!-- actual Quotes created using the admin page -->
+						  {% for quote in quotes%}
+						  <div class="carousel-item p-5 text-center" style="align-items: center">
+						    <div class="card-body ">
+						    	<h6>{{quote.title}}</h6>
+						    </div>
+						    <small>--- {{quote.by}}</small>
+						  </div>
+						  {% endfor %}
+						</div>
+						<small>
+							<a class="carousel-control-prev mt-5" href="#carouselExampleIndicators" role="button" data-slide="prev">
+							  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							  <span class="text-muted"><small>Previous</small></span>
+							</a>
+							<a class="carousel-control-next mt-5" href="#carouselExampleIndicators" role="button" data-slide="next">
+							  <span class="text-muted"><small>Next</small></span>
+							  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							  
+							</a>
+						</small>
+
+					<!-- /CAROUSEL -->
+
+			      </div>
+			    </div>
+			  </div>
+			  <!-- /.card -->
+			</div>
+		</div>
+	</div>
+	<br>
+	
+
+<!-- These 2 closing </div>s here is for the footer to be displayed properly. IDK where the open <div> is. :P -->
+    </div>
+</div> 

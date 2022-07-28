@@ -1,0 +1,52 @@
+{% extends 'home/index.html' %}
+
+{% block content %}
+<style type="text/css">
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+  .about {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .devCard{
+    font-family: 'Architects Daughter', cursive;
+    height: 200px;
+    transition-delay: .7s; /*idk why this is not working*/
+  }
+</style>
+<div class="row">
+  <!-- 1st col -->
+  <div class="about container col-md-8 text-sm bg-transparent">
+    <!-- about col -->
+    <div class="col">
+      <div class="card elevation-3" style="margin: 0;">
+        <div class="card-header">
+          <h2 class="card-title">About <u><a href="/">love,teppy</a></u></h2>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body text-muted text-sm">
+          <i><p>
+            This was actually created as a <b>not-so-surprising</b> surprise gift. <br>
+            <b>I wanted something special. Something not anybody can give.</b> <br>
+              <br>
+            <b>...something made with love and a lot of efforts.</b>
+
+
+          </p></i>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.about col -->
+  </div>
+  <!-- /1st col -->
+
+
+
+  <!-- 2nd col -->
+  <!-- dev profile -->
+  {% include 'home/teppyinfocard.html' %}
+</div> <!-- outermost row -->
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'home/index.html' %}
+{% load static %}
+{% load crispy_forms_tags %} 
+
+<!-- CREATE logic for authed vs unauthed navbars -->
+{% block content %}
+
+<div class="container" style="min-height: 100vh;">
+      
+
+  <div class="row">
+    <div class="col-sm-6 p-1 text-center" style="background-color: transparent">
+      <h5 class="text-center"><b>SALAMAT SHOPEE!</b></h5>
+      <small>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      </small>
+    </div>
+    
+      <a class="btn btn-outline-primary mb-1 mr-auto col-sm-6" style="float: right;" href="/blogs/new" title="Create a blog post!"> Share something </a>
+      <a class="btn bg-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <h5>Posting Reminders<small class="">(Click me!)</small></h5> 
+        <div>
+          <small class="ml-auto">Posts count: {{ page_obj.paginator.count }}</small>
+        </div>
+      </a>
+    <div class="collapse" id="collapseExample">
+      <div class="card-body text-sm">
+          {% for reminder in reminders %}
+            <strong>{{reminder.title}}</strong>
+            <p>{{reminder.body|safe}}</p>
+          {% endfor %}
+      </div>
+    </div>
+
+
+  <div class="row p-2">
+    <div class="col-md-8">
+    <!-- first column for posts -->
+    {% for post in posts %}
+    <div class="card p-2 col m-1 bg-dark"> 
+      <article class="media content-section m-1">
+        <a href="{% url 'profile' post.author %}">
+          <img
+          class="rounded-circle article-img"
+          src="{{ post.author.profile.image.url }}"
+          style="height: 25px; width: 25px">
+        </a>
+        <div class="media-body">
+            <div class="col" style="font-size: 12px">
+              <a class="ml-3 mr-5" href="{% url 'profile' post.author %}">
+                  {{ post.author }}
+              </a>
+                <small class="text-muted ml-2">
+                on {{ post.date_posted|date:"F d, Y" }} | <a href="{% url 'category' post.category %}">{{post.category}}</a> </small>
+              <span class="ml-5">
+                {% if post.author == user %}
+                <div style="float:right; font-size: 10px">
+                  <a class="fa fa-edit text-sm ml-2 mr-2" style="color: green" href="{% url 'post-update' post.slug %}"></a>
+                  <a class="fa fa-trash text-sm ml-2 mr-2" href="{% url 'post-delete' post.slug %}" style="color: red"></a>
+                  <!-- <a class="btn btn-outline-info btn-sm ml-2 mr-2" href="{% url 'user-posts' post.author %}" style="font-size: 10px">
+                    All your posts
+                  </a> -->
+                  <!-- displaying header_image sacrifices the title area -->
+                  <!-- {% if post.header_image %}
+                    <img src="{{post.header_image.url}}" style="right: 0px;height: 70px; width:120px; position: relative"; >
+                  {% endif %} -->
+                  <!-- this does not trigger anything as the author cannot like its own post -->
+                  <i class="text-primary text-sm far fa-thumbs-up ml-1"> {{post.total_likes}}</i>
+
+                </div>             
+                {% else %}
+                <div style="float:right">
+                  <i class="text-primary text-sm far fa-thumbs-up ml-1"> {{post.total_likes}}</i>
+                  
+                </div>
+                {% endif %}
+
+                
+
+                
+              </span>             
+            </div>
+          <div class="row">
+            <h6>
+              <a class="article-title col-4 ml-3 text-white" href=" {% url 'post-detail' post.slug %}">
+                {{ post.title|truncatechars:100 }}</a>
+            </h6>
+          </div>
+        </div>
+      </article>
+    </div>
+    {% endfor %}
+    <!-- BOTTOM PAGINATION PART for users' posts area -->
+    <div class="col border p-2">
+    {% if is_paginated %}
+      <a class="btn btn-sm btn-outline-dark" href="?page=1"> First </a>
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-sm btn-dark" href="?page={{ num }}"> {{ num }} </a>
+        {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+          <a class="btn btn-sm btn-outline-dark" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+      <a class="btn btn-sm btn-outline-dark" href="?page={{ page_obj.paginator.num_pages }}">
+        Last
+      </a>
+    {% endif %}
+    </div>
+  </div>
+</div> <!-- row -->
+</div>
+</div>
+
+{% endblock content %}

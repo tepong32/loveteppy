@@ -1,0 +1,150 @@
+{% extends 'home/index.html' %}
+{% load static %}
+{% load crispy_forms_tags %} 
+
+<!-- CREATE logic for authed vs unauthed navbars -->
+{% block content %}
+
+<section class="container" style="min-height: 100vh;">
+      
+
+  <div class="row">
+    <div class="col-sm-6 p-1 text-center" style="background-color: white">
+      <h5>Category: {{cats}}</h5>
+      <small>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      </small>
+    </div>
+    
+      <a class="btn btn-outline-primary mb-1 mr-auto col-sm-6" style="float: right;" href="/blog/post/new" title="Create a blog post!"> Share something </a>
+      
+    
+      <a class="btn btn-primary bg-dark" data-toggle="collapse" href="#postingReminders" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Posting Reminders
+      </a>
+    <div class="collapse" id="postingReminders">
+      <div class="card-body text-sm">
+        <strong class="text-danger quoteText">NO SHITPOSTING. </strong>
+        <p>
+          This site is not for such. This is supposed to be a forum-like site where you can share meaningful things, stories and ideas to other users. For now, it will be a blog site. You can use Facebook for your rants. Honestly.
+        </p>
+        
+        <strong class="text-danger quoteText">BE KIND & RESPONSIBLE. </strong>
+        <p>
+          Shout out to people more knowledgeable on the internet than others! Please. Do not use your posts as ways to phish any information about anyone. <u class="text-danger">Do it somewhere else.</u> People here are good people only intending to move away from mainstream social media noises.
+        </p>
+        <p>
+          To everyone, <b class="text-danger quoteText"><i>ALWAYS BE VIGILANT.</i></b> On the internet, trust no one. The reason I allowed you to just put dummy information or not put any information on your profiles at all is because I do not want you to be a victim of cyber crimes. Please be careful clicking on links.
+        </p>
+
+        <strong class="text-danger quoteText">BE DETAILED. </strong>
+        <p>
+          I mean...there's no more intimidating thing for readers to actually be hung-up with a good article/blog/story...unless there'll be a season 2. :D I am assuming you love writing and/or reading that's why you're here. I do <small><i>(I think so?)</i></small>. Tell us your stories and don't hang us up! ;)
+        </p>
+      </div>
+    </div>
+
+
+  <div class="row p-2">
+    <div class="col-md-8">
+    <!-- first column for posts -->
+    {% if category_posts %}
+      {% for post in category_posts %}
+      <div class="card p-2 col bg-dark"> 
+        <article class="media content-section m-1">
+          <img
+            class="rounded-circle article-img"
+            src="{{ post.author.profile.image.url }}"
+            style="height: 25px; width: 25px">
+          <div class="media-body">
+              <div class="col" style="font-size: 12px">
+                <a class="ml-3 mr-5 quoteText" href="{% url 'profile' post.author %}">
+                    {{ post.author }}
+                </a>
+                  <small class="text-muted ml-2">
+                  on {{ post.date_posted|date:"F d, Y" }} | <a href="{% url 'category' post.category %}">{{post.category}}</a> </small>
+                <span class="ml-5">
+                  {% if post.author == user %}
+                  <div style="float:right; font-size: 10px">
+                    <a class="fa fa-edit text-sm ml-2 mr-2" style="color: green" href="{% url 'post-update' post.id %}"></a>
+                    <a class="fa fa-trash text-sm ml-2 mr-2" href="{% url 'post-delete' post.id %}" style="color: red"></a>
+                    <!-- <a class="btn btn-outline-info btn-sm ml-2 mr-2" href="{% url 'user-posts' post.author %}" style="font-size: 10px">
+                      All your posts
+                    </a> -->
+                    <!-- displaying header_image sacrifices the title area -->
+                    <!-- {% if post.header_image %}
+                      <img src="{{post.header_image.url}}" style="right: 0px;height: 70px; width:120px; position: relative"; >
+                    {% endif %} -->
+                    <!-- this does not trigger anything as the author cannot like its own post -->
+                    <i class="text-primary text-sm far fa-thumbs-up ml-1"> {{post.total_likes}}</i>
+
+                  </div>             
+                  {% else %}
+                  <div style="float:right">
+                    <!-- <a class="btn btn-outline-info btn-sm" href="{% url 'user-posts' post.author %}" style="font-size: 10px">
+                      All posts by {{ post.author }}
+                    </a> -->
+                    <!-- displaying header_image sacrifices the title area -->
+                    <!-- {% if post.header_image %}
+                      <img src="{{post.header_image.url}}" style="right: 0px;height: 70px; width:120px; position: cover"; >
+                    {% endif %} -->
+                    <i class="text-primary text-sm far fa-thumbs-up ml-1"> {{post.total_likes}}</i>
+                    
+                  </div>
+                  {% endif %}
+
+                  
+
+                  
+                </span>             
+              </div>
+            <div class="row">
+              <h6>
+                <a class="article-title col-4 ml-3 text-teal" href=" {% url 'post-detail' post.id %}">
+                  {{ post.title|truncatechars:100 }}</a>
+              </h6>
+            </div>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+      <!-- BOTTOM PAGINATION PART for users' posts area -->
+      <div class="col border p-2">
+      {% if is_paginated %}
+        <a class="btn btn-sm btn-outline-dark" href="?page=1"> First </a>
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <a class="btn btn-sm btn-dark" href="?page={{ num }}"> {{ num }} </a>
+          {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+            <a class="btn btn-sm btn-outline-dark" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+        <a class="btn btn-sm btn-outline-dark" href="?page={{ page_obj.paginator.num_pages }}">
+          Last
+        </a>
+      {% endif %}
+    {% else %}
+      <div class="col"><h1>Sorry, the page does not exists.</h1></div> 
+    {% endif %}
+    </div>
+  </div>
+
+  <!-- second column for chats or something else -->
+  <div class="col-md-4 p-3 border border-success">
+    Thinking about a Public Chatbox to be placed here ...or something else. <br>
+    Still undecided. <br>
+    Suggestions welcome. <br>
+    Please email me: <b>teppy@teppy.rocks</b>
+  </div>
+
+
+
+</div> <!-- row -->
+</section>
+
+{% endblock content %}
