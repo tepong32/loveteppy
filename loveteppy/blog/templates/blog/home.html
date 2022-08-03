@@ -95,7 +95,7 @@
     </div>
     {% endfor %}
     <!-- BOTTOM PAGINATION PART for users' posts area -->
-    <div class="col border p-2">
+    <div class="col p-2">
     {% if is_paginated %}
       <a class="btn btn-sm btn-outline-dark" href="?page=1"> First </a>
       {% for num in page_obj.paginator.page_range %}
