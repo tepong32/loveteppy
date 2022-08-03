@@ -2,11 +2,12 @@
 
 <!-- Users' Profile page -->
 <!-- Self-explanatory page...I guess. LOL -->
+<!-- THIS PAGE WASN'T USED ON LOVE_TEPPY PROJECT FOR IT ONLY HAS THE ADMIN AS AUTHOR -->
 {% block content %}
 <div class="row">
   <div class="card"> <!-- add col-md-8 if you are to use the author's profile snippet commented-out at the very bottom.  -->
       <div class="card-header p-2">
-        Posts by <a href="{% url 'profile' view.kwargs.username %}">{{ view.kwargs.username }}</a> ({{ page_obj.paginator.count }})</a>
+        Posts by <a href="{#% url 'profile' view.kwargs.username %#}">{{ view.kwargs.username }}</a> ({{ page_obj.paginator.count }})</a>
       </div><!-- /.card-header -->
       <div class="card-body">
         <div class="tab-content">
@@ -19,7 +20,7 @@
                 <div class="card-title col">
                   {% if is_paginated %}
                     <a class="btn btn-sm btn-outline-dark fa fa-arrow-left" href="{% url 'blogs' %}">
-                      <span class="quoteText">Blogs</span>
+                      <span class="">Blogs</span>
                     </a>
                     <a class="btn btn-sm btn-outline-primary" href="?page=1">
                       First
@@ -41,7 +42,7 @@
 
                   {% else %}
                   <a class="btn btn-sm btn-outline-dark fa fa-arrow-left" href="{% url 'blogs' %}">
-                    <span class="quoteText">Blogs</span>
+                    <span class="">Blogs</span>
                   </a>
                   {% endif %}
                 </div>

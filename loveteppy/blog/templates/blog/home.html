@@ -20,7 +20,7 @@
       </small>
     </div>
     
-      <a class="btn btn-outline-primary mb-1 mr-auto col-sm-6" style="float: right;" href="/blogs/new" title="Create a blog post!"> Share something </a>
+      <!-- <a class="btn btn-outline-primary mb-1 mr-auto col-sm-6" style="float: right;" href="/blogs/new" title="Create a blog post!"> Share something </a>
       <a class="btn bg-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         <h5>Posting Reminders<small class="">(Click me!)</small></h5> 
         <div>
@@ -34,24 +34,24 @@
             <p>{{reminder.body|safe}}</p>
           {% endfor %}
       </div>
-    </div>
+    </div> -->
 
 
   <div class="row p-2">
     <div class="col-md-8">
     <!-- first column for posts -->
     {% for post in posts %}
-    <div class="card p-2 col m-1 bg-dark"> 
+    <div class="card p-2 col m-1"> 
       <article class="media content-section m-1">
-        <a href="{% url 'profile' post.author %}">
+        <a href="{#% url 'profile' post.author %#}">
           <img
           class="rounded-circle article-img"
-          src="{{ post.author.profile.image.url }}"
+          src="https://drive.google.com/uc?id=1JSY0d86oFJ2KYnY4ATlYUggBH-mH0Zqt" 
           style="height: 25px; width: 25px">
-        </a>
+        </a> <!-- {{ post.author.profile.image.url }} -->
         <div class="media-body">
             <div class="col" style="font-size: 12px">
-              <a class="ml-3 mr-5" href="{% url 'profile' post.author %}">
+              <a class="ml-3 mr-5" href="{#% url 'profile' post.author %#}">
                   {{ post.author }}
               </a>
                 <small class="text-muted ml-2">
@@ -61,7 +61,7 @@
                 <div style="float:right; font-size: 10px">
                   <a class="fa fa-edit text-sm ml-2 mr-2" style="color: green" href="{% url 'post-update' post.slug %}"></a>
                   <a class="fa fa-trash text-sm ml-2 mr-2" href="{% url 'post-delete' post.slug %}" style="color: red"></a>
-                  <!-- <a class="btn btn-outline-info btn-sm ml-2 mr-2" href="{% url 'user-posts' post.author %}" style="font-size: 10px">
+                  <!-- <a class="btn btn-outline-info btn-sm ml-2 mr-2" href="{#% url 'user-posts' post.author %#}" style="font-size: 10px">
                     All your posts
                   </a> -->
                   <!-- displaying header_image sacrifices the title area -->
